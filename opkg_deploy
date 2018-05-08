@@ -6,7 +6,8 @@ if="eth0"
 cat $1 | while read -r line
 do
     ip="$line"%"$if"
-    scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null wbm11/packages/$2 root@[$ip]:/tmp/
+    echo $ip
+    scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null packages/$2 root@[$ip]:/tmp/
     if [ "$3" != "" ]; then
       echo| ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip "opkg remove $3"
     fi

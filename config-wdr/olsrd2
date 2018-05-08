@@ -1,0 +1,17 @@
+config global
+	option 'failfast'	'no'
+	option 'pidfile'	'/var/run/olsrd2.pid'
+	option 'lockfile'	'/var/lock/olsrd2'
+
+config log
+	option 'syslog'		'true'
+	option 'stderr'		'true'
+
+config telnet
+	option 'port' '2009'
+
+config interface
+	option 'ifname' 'loopback'
+
+config interface
+	list 'ifname' 'testbed'
