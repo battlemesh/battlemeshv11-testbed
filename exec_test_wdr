@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if="enxa0cec817ade8"
+cat $1 | while read -r line
+do
+    ip="$line"%"$if"
+    #echo scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null config-wdr/wireless root@$ip:/etc/config/
+    ssh -6 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@[$ip] 'echo "Ciao"'
+done

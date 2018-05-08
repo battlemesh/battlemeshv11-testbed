@@ -1,0 +1,35 @@
+#!/bin/sh
+. scripts/functions_wbm.sh
+
+FILE="${1:-./wdr4300}"		# or even a list of IPs (piping stdin not allowed)
+USE_TEST_NETWORK="$2"		# <empty> or 'true'
+
+LIST_FAILED=
+BAD=0
+GOOD=0
+
+if [ -e "$FILE" ]; then
+	log "using file '$FILE'"
+	while read -r LINE; do LIST_IP="$LIST_IP $LINE"; done <"$FILE"
+else
+	log "using IP's: $FILE"
+	for IP in $FILE; do LIST_IP="$LIST_IP $IP"; done
+fi
+
+for IP in $LIST_IP; do
+	[ -n "$USE_TEST_NETWORK" ] && IP="$( convert_management2test_ip "$IP" )"
+
+	if ping_ok "$IP"; then
+		GOOD=$(( GOOD + 1 ))
+	else
+		BAD=$(( BAD + 1 ))
+		LIST_FAILED="$LIST_FAILED $IP"
+	fi
+done
+
+log "GOOD: $GOOD BAD: $BAD routers"
+for IP in $LIST_FAILED; do
+	log "failed IP: '$IP'"
+done
+
+test -z "$LIST_FAILED"		# returncode = 0 if everything is ok

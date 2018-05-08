@@ -1,0 +1,8 @@
+#!/bin/bash
+if="eth0"
+cat $1 | while read -r line
+do
+    ip="$line"%"$if"
+    echo | ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip reboot
+    echo "$ip rebooted"
+done
