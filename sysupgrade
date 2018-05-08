@@ -1,0 +1,12 @@
+#!/bin/bash
+#$1 is the list of ipv6 link local
+#$2 name of image to upgrade
+#$3 
+if="eth0"
+cat $1 | while read -r line
+do
+    ip="$line"%"$if"
+    scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null firmware0.1/$2 root@[$ip]:/tmp/
+		scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null scripts/sysupgrade root@[$ip]:/tmp/
+    echo| ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip "nohup /tmp/sysupgrade  &> /dev/null &"
+done
