@@ -3,12 +3,13 @@ source ip_list.sh
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 [ $# -eq 0 ] && usage
 
-while getopts ":c:nr" arg; do
+
+while getopts ":c:dr" arg; do
   case $arg in
     c) # Specify destination.
       DEST=${OPTARG}
       ;;
-    n) # delete previous output file
+    d) # delete previous output file
 	  DELETE=1
       ;;
     r) # pick a random destination
@@ -21,17 +22,22 @@ while getopts ":c:nr" arg; do
   esac
 done
 
+
+if [ $RND ];
+    DEST_START=$(($RANDOM%${#IPv4[@]}))
+    DEST=${IPv4[$DEST_ID]}
+    for i in `seq 1 ${#IPv4[@]}`; 
+    if check_if_up $DEST;
+        break;
+    then 
+fi
+
+
 IPERFOUT="/tmp/iperftest-iperf-"`hostname`"-$DEST.csv"
 if [ $DELETE ];
 then 
     rm $IPERFOUT
 fi 
-
-if [ $RND ];
-then 
-    DEST_ID=$(($RANDOM%${#IPv4[@]}))
-    DEST=${IPv4[$DEST_ID]}
-fi
 
 
 
