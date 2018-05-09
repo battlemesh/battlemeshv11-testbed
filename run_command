@@ -1,0 +1,12 @@
+#!/bin/bash
+#$1 is the list of ipv6 link local
+#$2 command to run
+#$3 
+if="eth0"
+cat $1 | while read -r line
+do
+	ip="$line"%"$if"
+	echo |ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip "$2"
+  echo "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip $2"
+
+done
