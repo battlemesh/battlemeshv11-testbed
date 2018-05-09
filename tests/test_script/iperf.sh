@@ -1,10 +1,16 @@
 # perform an iperf towards a node, save the result in a file in /tmp 
 source ip_list.sh
+source functions.sh
+
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 [ $# -eq 0 ] && usage
 
 
-while getopts ":c:dr" arg; do
+PING=''
+DELETE=''
+RND=''
+
+while getopts ":c:drp" arg; do
   case $arg in
     c) # Specify destination.
       DEST=${OPTARG}
@@ -15,6 +21,9 @@ while getopts ":c:dr" arg; do
     r) # pick a random destination
 	  RND=1
       ;;
+    p) # do ping instead of iperf
+	  PING=1
+      ;;
     h | *) # Display help.
       usage
       exit 0
@@ -23,7 +32,7 @@ while getopts ":c:dr" arg; do
 done
 
 
-if [ $RND ]; then
+if [ -n "$RND" ]; then
     DEST_START=$(($RANDOM%${#IPv4[@]}))
     DEST=${IPv4[$DEST_START]}
     for i in `seq 1 ${#IPv4[@]}`; do
@@ -37,14 +46,21 @@ if [ $RND ]; then
     done
 fi
 
-
-IPERFOUT="/tmp/iperftest-iperf-"`hostname`"-$DEST.csv"
-if [ $DELETE ];
-then 
-    rm $IPERFOUT
+if [ -n "$PING" ]; then
+    PINGOUT="/tmp/pingtest-ping-"`hostname`"-$DEST.csv"
+    if [ -n "$DELETE" ];
+    then 
+        rm -f $PINGOUT
+    fi 
+    ping -c 3 -q $DEST | tail -n 1 >> $PINGOUT
+else 
+    IPERFOUT="/tmp/iperftest-iperf-"`hostname`"-$DEST.csv"
+    if [ -n "$DELETE" ];
+    then 
+        rm -f $IPERFOUT
+    fi 
+    iperf -f M -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
 fi 
 
 
-
 #iperf -f M -y C -t 10 -e -V -c $DEST | tail -n 2 >> $IPERFOUT
-iperf -f M -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
