@@ -1,0 +1,23 @@
+config 'plugin'
+  option plugin 'bmx7_tun.so'
+
+config 'plugin'
+  option plugin 'bmx7_iwinfo.so'
+  
+config 'dev'
+  option dev 'wlan1'
+  
+config 'unicastHna'
+  option unicastHna '{}'
+
+config 'tunDev'
+  option tunDev 'main'
+  option tun4Address '{}'
+
+config 'tunIn'
+  option tunIn 'lan'
+  option network '{}'
+  
+config 'tunOut' 
+  option tunOut 'main'
+  option network '10.0.0.0/8'

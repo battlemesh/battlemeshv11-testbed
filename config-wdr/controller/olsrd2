@@ -2,6 +2,10 @@ config global
 	option 'failfast'	'no'
 	option 'pidfile'	'/var/run/olsrd2.pid'
 	option 'lockfile'	'/var/lock/olsrd2'
+	option 'plugin'	'remotecontrol'
+
+config olsrv2
+	option 'lan' '10.1.1.0/24'
 
 config log
 	option 'syslog'		'true'
@@ -9,9 +13,15 @@ config log
 
 config telnet
 	option 'port' '2009'
+	option 'bindto' '0.0.0.0'
 
 config interface
 	option 'ifname' 'loopback'
 
 config interface
 	list 'ifname' 'testbed'
+	list 'ifname' 'testbed_virtual'
+
+
+config remotecontrol
+	option 'acl'	'default_accept'
