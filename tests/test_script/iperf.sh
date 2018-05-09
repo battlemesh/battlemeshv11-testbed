@@ -23,13 +23,18 @@ while getopts ":c:dr" arg; do
 done
 
 
-if [ $RND ];
+if [ $RND ]; then
     DEST_START=$(($RANDOM%${#IPv4[@]}))
-    DEST=${IPv4[$DEST_ID]}
-    for i in `seq 1 ${#IPv4[@]}`; 
-    if check_if_up $DEST;
-        break;
-    then 
+    DEST=${IPv4[$DEST_START]}
+    for i in `seq 1 ${#IPv4[@]}`; do
+        echo "pinging $DEST"
+        if check_if_up $DEST; then
+            break;
+        else
+            DEST_ID=$((($i+$DEST_START)%${#IPv4[@]}))
+            DEST=${IPv4[$DEST_ID]}
+        fi;
+    done
 fi
 
 
