@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if="eth0"
+cat $1 | while read -r line
+do
+    ip="$line"
+    scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null config-wdr/$ip/olsrd2 root@$ip:/etc/config/
+    #scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null config-wdr/network root@[$ip]:/etc/config/
+    echo "$ip wireless configuration updated"
+done

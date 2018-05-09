@@ -5,7 +5,7 @@
 if="eth0"
 cat $1 | while read -r line
 do
-	ip="$line"%"$if"
+	ip="$line"
 	echo |ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip "$2"
   echo "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip $2"
 
