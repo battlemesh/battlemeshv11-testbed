@@ -1,3 +1,2 @@
-sleep 5
-touch /tmp/updating
+sleep 60
 sysupgrade /tmp/firmware.bin
