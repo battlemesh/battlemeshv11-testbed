@@ -89,6 +89,7 @@ position_map["10.0.13.1"] = {'x': 325, 'y': 84}
 position_map["10.0.14.1"] = {'x': 59, 'y': 228}
 position_map["10.0.15.1"] = {'x': 231, 'y': 38}
 position_map["10.0.18.1"] = {'x': 50, 'y': 60}
+position_map["10.0.20.1"] = {'x': 290, 'y': 260}
 #position_map["fe80::12fe:edff:fee5:f0c8"] = {'x':151, 'y':209}
 #position_map["fe80::12fe:edff:fee5:f0c8"] = {'x':151, 'y':209}
 #position_map["fe80::12fe:edff:fee5:f0c6"] = {'x':, 'y':}

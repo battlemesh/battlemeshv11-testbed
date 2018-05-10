@@ -67,6 +67,3 @@ ax2.set_ylabel('Mbps')
 ax1.legend(p_h + p_b, [l.get_label() for l in p_h + p_b ], loc=1)
 plt.title("Shortest paths length and bandwidth")
 plt.show()
-
-
-
