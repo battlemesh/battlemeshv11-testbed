@@ -21,6 +21,11 @@ config interface
 config interface
 	list 'ifname' 'testbed'
 
+config nhdp
+	option 'mpr' '-'
+	
+config domain '0'
+	option 'mpr' '-'
 
 config remotecontrol
 	option 'acl'	'default_accept'

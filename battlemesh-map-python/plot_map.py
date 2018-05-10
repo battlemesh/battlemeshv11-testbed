@@ -41,10 +41,10 @@ def plot_line(n1, n2, left_id, right_id, cost=0, def_lw=5):
 max_y = 370
 max_x = 617
 topo_file = "/tmp/map.json"
-if len(sys.argv) > 1:
-    topo_file = sys.argv[1]
+if len(sys.argv) > 2:
+    topo_file = sys.argv[2]
 else:
-    os.system('echo "/netjsoninfo filter graph ipv4_0" | nc 10.1.2.1  2009  > '
+    os.system('echo "/netjsoninfo filter graph ipv4_0" | nc %s  2009  > '%(sys.argv[1])
               + topo_file)
 
 plotted_nodes = set()
@@ -53,33 +53,10 @@ def_width = 2
 
 position_map = {}
 
-#3600
-#position_map["fe80::ea94:f6ff:fef3:10ee"] = {'x':, 'y':}
-#position_map["fe80::ea94:f6ff:fef2:f4ce"] = {'x':, 'y':}
-#position_map["fe80::ea94:f6ff:fef3:1100"] = {'x':, 'y':}
-#position_map["fe80::ea94:f6ff:fef3:114e"] = {'x':, 'y':}
-#position_map["fe80::ea94:f6ff:fef3:fe9"] = {'x':, 'y':}
-#position_map["fe80::ea94:f6ff:fef3:1145"] = {'x':, 'y':}
-#position_map["fe80::ea94:f6ff:fef3:10f7"] = {'x':, 'y':}
-#position_map["fe80::16cc:20ff:fe5e:c8ac"] = {'x':, 'y':}
-position_map["fe80::16cc:20ff:fe5e:c88c"] = {'x': 118, 'y': 232}
-position_map["fe80::16cc:20ff:fe5e:c7c3"] = {'x': 157, 'y': 264}
-position_map["fe80::16cc:20ff:fe5e:c781"] = {'x': 250, 'y': 86}
-position_map["fe80::16cc:20ff:fe5e:c802"] = {'x': 258, 'y': 138}
-
 position_map["10.0.7.1"] = {'x': 118, 'y': 232}
 position_map["10.0.5.1"] = {'x': 157, 'y': 264}
 position_map["10.0.4.1"] = {'x': 250, 'y': 86}
 position_map["10.0.6.1"] = {'x': 258, 'y': 138}
-#4300
-position_map["fe80::6670:2ff:fe3e:9d5f "] = {'x': 151, 'y': 209}
-position_map["fe80::12fe:edff:fee5:f0c8"] = {'x': 145, 'y': 114}
-position_map["fe80::12fe:edff:fee5:eef2"] = {'x': 198, 'y': 115}
-position_map["fe80::12fe:edff:fee6:ad8 "] = {'x': 119, 'y': 48}
-position_map["fe80::12fe:edff:fee6:ade "] = {'x': 325, 'y': 84}
-position_map["fe80::a2f3:c1ff:fe74:83ce"] = {'x': 59,  'y': 228}
-position_map["fe80::a2f3:c1ff:fe74:83cd"] = {'x': 231, 'y': 38}
-
 position_map["10.0.2.2"] = {'x': 145, 'y': 114}
 position_map["10.0.2.1"] = {'x': 145, 'y': 114}
 position_map["10.0.8.1"] ={'x': 110, 'y': 160} 
@@ -90,11 +67,7 @@ position_map["10.0.14.1"] = {'x': 59, 'y': 228}
 position_map["10.0.15.1"] = {'x': 231, 'y': 38}
 position_map["10.0.18.1"] = {'x': 50, 'y': 60}
 position_map["10.0.20.1"] = {'x': 290, 'y': 260}
-#position_map["fe80::12fe:edff:fee5:f0c8"] = {'x':151, 'y':209}
-#position_map["fe80::12fe:edff:fee5:f0c8"] = {'x':151, 'y':209}
-#position_map["fe80::12fe:edff:fee5:f0c6"] = {'x':, 'y':}
-#position_map["fe80::12fe:edff:fee6:add"] = {'x':, 'y':}
-
+position_map["10.0.23.1"] = {'x': 300, 'y': 210}
 
 img = plt.imread("map.png")
 fig, ax = plt.subplots()
