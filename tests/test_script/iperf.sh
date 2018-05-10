@@ -6,6 +6,11 @@ source functions.sh
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 [ $# -eq 0 ] && usage
 
+hostname=`ip -o addr show dev wlan1|grep inet\ | awk '{print $4}' | sed -e s@/[0-9]*@/32@ | awk -F '/' '{print $1}'`
+if [ -z $hostname ]; then 
+    hostaname=`hostname`
+fi
+
 
 PING=''
 DELETE=''
@@ -48,14 +53,14 @@ if [ -n "$RND" ]; then
 fi
 
 if [ -n "$PING" ]; then
-    PINGOUT="/tmp/pingtest-ping-"`hostname`"-$DEST.csv"
+    PINGOUT="/tmp/pingtest-ping-$hostname-$DEST.csv"
     if [ -n "$DELETE" ];
     then 
         rm -f $PINGOUT
     fi 
     ping -c 3 -q $DEST | tail -n 1 >> $PINGOUT
 else 
-    IPERFOUT="/tmp/iperftest-iperf-"`hostname`"-$DEST.csv"
+    IPERFOUT="/tmp/iperftest-iperf-$hostname-$DEST.csv"
     if [ -n "$DELETE" ];
     then 
         rm -f $IPERFOUT
