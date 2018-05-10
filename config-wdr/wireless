@@ -4,7 +4,8 @@ config wifi-device 'radio0'
 	option hwmode '11g'
 	option path 'platform/ar934x_wmac'
 	option htmode 'HT20'
-	option txpower '10'
+	option txpower '20'
+	option country 'IT'
 
 
 config wifi-iface 'mgmt'
@@ -16,11 +17,13 @@ config wifi-iface 'mgmt'
 
 config wifi-device 'radio1'
 	option type 'mac80211'
-	option channel '36'
+	option channel '44'
 	option hwmode '11a'
 	option txpower '6'
 	option path 'pci0000:00/0000:00:00.0'
 	option htmode 'HT20'
+	option country 'IT'
+
 
 config wifi-iface 'testbed'
 	option device 'radio1'

@@ -22,6 +22,12 @@ config interface
 	list 'ifname' 'testbed'
 	list 'ifname' 'testbed_virtual'
 
+config nhdp
+	option 'mpr' '-'
+	
+config domain '0'
+	option 'mpr' '-'
+
 
 config remotecontrol
 	option 'acl'	'default_accept'
