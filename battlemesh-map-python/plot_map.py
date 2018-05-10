@@ -16,7 +16,6 @@ def parse_bitrate(btr):
     except TypeError:
         scale = 1
         number = float(btr)
-    print btr 
     if scale == "Kbit":
         number = number/1000
     elif scale == "bit":
