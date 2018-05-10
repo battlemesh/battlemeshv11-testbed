@@ -38,6 +38,10 @@ def plot_line(n1, n2, left_id, right_id, cost=0, def_lw=5):
         ax.plot(x, y, linewidth=lw, color='firebrick')
 
 
+def plot_node(n):
+    plt.Circle((n['x'], n['y']), 2)
+
+
 max_y = 370
 max_x = 617
 topo_file = "/tmp/map.json"
@@ -59,7 +63,7 @@ position_map["10.0.4.1"] = {'x': 250, 'y': 86}
 position_map["10.0.6.1"] = {'x': 258, 'y': 138}
 position_map["10.0.2.2"] = {'x': 145, 'y': 114}
 position_map["10.0.2.1"] = {'x': 145, 'y': 114}
-position_map["10.0.8.1"] ={'x': 110, 'y': 160} 
+position_map["10.0.8.1"] = {'x': 110, 'y': 160} 
 position_map["10.0.1.1"] = {'x': 198, 'y': 115}
 position_map["10.0.3.1"] = {'x': 119, 'y': 48}
 position_map["10.0.13.1"] = {'x': 325, 'y': 84}
@@ -101,6 +105,14 @@ for link in g.edges(data=True):
         left_id = ip_left.split(".")[2]
         right_id = ip_right.split(".")[2]
         plot_line(left, right, left_id, right_id, cost=cost)
+    else:
+        raise Exception(ip_left + " or " + ip_right + " not in position map!")
+
+for k in position_map:
+    k_id = k.split(".")[2]
+    if k_id not in plotted_nodes:
+        plot_node(position_map[k])
+
 ax.imshow(img)
 plt.savefig("/tmp/map.png")
 plt.show()
