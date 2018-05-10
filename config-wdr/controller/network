@@ -3,13 +3,14 @@ config interface 'loopback'
 	option proto 'static'
 	option ipaddr '127.0.0.1'
 	option netmask '255.0.0.0'
-	
+
 config interface 'loop2'
 	option ifname 'lo'
 	option proto 'static'
-	option ipaddr '{}'
+	option ipaddr '10.0.2.1'
 	option netmask '255.255.255.255'
-	option ip6addr '{}'
+	option ip6addr 'fc00:2::1/64'
+
 
 config switch
 	option name 'switch0'
@@ -20,20 +21,31 @@ config interface 'lan'
 	option type 'bridge'
 	option ifname 'eth0.3'
 	option proto 'static'
-	option ipaddr '{}'
+	option ipaddr '10.1.2.1'
 	option netmask '255.255.255.0'
 
 config interface 'testbed'
 	option type 'wireless'
-	option ifname 'wlan1' 
+	list ifname 'wlan1' 
 	option proto 'unmanaged'
+
+config interface 'testbed_virtual'
+	option type 'virtual'
+	option ifname 'eth0.4'
+	option proto 'static'
+	option ipaddr '10.0.2.2'
+	option netmask '255.255.255.255'
 	
 config interface 'mgmt'
 	option type 'bridge'
 	list ifname 'eth0.1'
 	option proto 'static'
-	option ipaddr '{}'
+	option ipaddr '192.168.254.2'
 	option netmask '255.255.255.0'
+
+config interface 'wan'
+	option ifname 'eth0.2'
+	option proto 'dhcp'
 	
 config switch_vlan
 	option device 'switch0'
@@ -42,8 +54,13 @@ config switch_vlan
 	
 config switch_vlan
 	option device 'switch0'
+	option vlan '4'
+	option ports '4 0t'
+
+config switch_vlan
+	option device 'switch0'
 	option vlan '3'
-	option ports '4 5 0t'
+	option ports '5 0t'
 
 config switch_vlan
 	option device 'switch0'
