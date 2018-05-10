@@ -91,10 +91,11 @@ for link in g.edges(data=True):
     if ip_left in position_map and ip_right in position_map:
         try:
             cost = link[2]['in_text']
+            olsr_cost = link[2]['in_cost']
         except Exception:
             pass
         cost = parse_bitrate(cost)
-        new_g.add_edge(ip_left, ip_right, weight=cost)
+        new_g.add_edge(ip_left, ip_right, weight=cost, cost=olsr_cost)
         left = position_map[ip_left]
         right = position_map[ip_right]
         left_id = ip_left.split(".")[2]
