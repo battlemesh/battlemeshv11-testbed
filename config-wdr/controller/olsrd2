@@ -5,7 +5,8 @@ config global
 	option 'plugin'	'remotecontrol'
 
 config olsrv2
-	option 'lan' '10.1.1.0/24'
+	list 'lan' '10.1.2.0/24'
+	list 'lan' '0.0.0.0/0'
 
 config log
 	option 'syslog'		'true'

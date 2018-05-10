@@ -1,3 +1,4 @@
+#!/bin/bash
 # perform an iperf towards a node, save the result in a file in /tmp 
 source ip_list.sh
 source functions.sh
