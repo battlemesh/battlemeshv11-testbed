@@ -38,8 +38,9 @@ def plot_line(n1, n2, left_id, right_id, cost=0, def_lw=5):
         ax.plot(x, y, linewidth=lw, color='firebrick')
 
 
-def plot_node(n):
-    plt.Circle((n['x'], n['y']), 2)
+def plot_node(n, color='r'):
+     ci = plt.Circle((n['x'], n['y']), 10, color=color)
+     ax.add_artist(ci)
 
 
 max_y = 370
@@ -72,6 +73,9 @@ position_map["10.0.15.1"] = {'x': 231, 'y': 38}
 position_map["10.0.18.1"] = {'x': 50, 'y': 60}
 position_map["10.0.20.1"] = {'x': 290, 'y': 260}
 position_map["10.0.23.1"] = {'x': 300, 'y': 210}
+
+peerstreamer_map = [position_map["10.0."+str(x)+".1"] for x in [7, 1, 5, 13, 6,
+                                                                8, 2]]
 
 img = plt.imread("map.png")
 fig, ax = plt.subplots()
@@ -112,6 +116,9 @@ for k in position_map:
     k_id = k.split(".")[2]
     if k_id not in plotted_nodes:
         plot_node(position_map[k])
+
+for ps in peerstreamer_map:
+    plot_node(ps, color='b')
 
 ax.imshow(img)
 plt.savefig("/tmp/map.png")
