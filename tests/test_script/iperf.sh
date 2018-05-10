@@ -7,6 +7,7 @@ usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 [ $# -eq 0 ] && usage
 
 hostname=`ip -o addr show dev wlan1|grep inet\ | awk '{print $4}' | sed -e s@/[0-9]*@/32@ | awk -F '/' '{print $1}'`
+
 if [ -z $hostname ]; then 
     hostaname=`hostname`
 fi

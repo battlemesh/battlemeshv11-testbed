@@ -10,8 +10,13 @@ import re
 
 
 def parse_bitrate(btr):
-    number = float(re.findall("^[0-9]*\.?[0-9]*", btr)[0])
-    scale = re.findall("Mbit|Kbit|bit|Gbit", btr)[0]
+    try:
+        scale = re.findall("Mbit|Kbit|bit|Gbit", btr)[0]
+        number = float(re.findall("^[0-9]*\.?[0-9]*", btr)[0])
+    except TypeError:
+        scale = 1
+        number = float(btr)
+    print btr 
     if scale == "Kbit":
         number = number/1000
     elif scale == "bit":
