@@ -1,4 +1,4 @@
-source_address, destination_address, ping median loss
+source_address, destination_address, ping, median loss
 10.0.14.1,10.0.14.1,0.0,0.282
 10.0.18.1,10.0.18.1,0.0,0.286
 10.0.19.1,10.0.19.1,0.0,0.287

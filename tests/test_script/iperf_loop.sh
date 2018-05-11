@@ -2,6 +2,6 @@
 rm /tmp/ping*
 rm /tmp/iperf*
 while [ 1 ]; do
-  ./iperf.sh -r -p
+  ./iperf.sh -r
   sleep 1
 done

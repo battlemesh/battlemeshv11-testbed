@@ -16,6 +16,7 @@ fi
 PING=''
 DELETE=''
 RND=''
+IPv6=''
 
 while getopts ":c:drp" arg; do
   case $arg in
@@ -25,6 +26,8 @@ while getopts ":c:drp" arg; do
     d) # delete previous output file
 	  DELETE=1
       ;;
+    6) # use ipv6
+    IPv6=1
     r) # pick a random destination
 	  RND=1
       ;;
@@ -40,8 +43,15 @@ done
 
 
 if [ -n "$RND" ]; then
-    DEST_START=$(($RANDOM%${#IPv4[@]}))
-    DEST=${IPv4[$DEST_START]}
+    if [ -n "$IPv6" ];
+    then
+      DEST_START=$(($RANDOM%${#IPv4[@]}))
+      DEST=${IPv4[$DEST_START]}
+    else
+      DEST_START=$(($RANDOM%${#IPv6[@]}))
+      DEST=${IPv6[$DEST_START]}
+    fi
+
     for i in `seq 1 ${#IPv4[@]}`; do
         echo "pinging $DEST"
         if check_if_up $DEST; then
@@ -66,8 +76,13 @@ else
     if [ -n "$DELETE" ];
     then 
         rm -f $IPERFOUT
-    fi 
-    iperf -f M -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
+    fi
+    if [ -n "$IPv6" ];
+    then
+      iperf -f M -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
+    else
+      iperf -f M -V -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
+    fi
 fi 
 
 

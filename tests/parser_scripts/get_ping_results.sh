@@ -4,7 +4,7 @@
 . ../test_script/functions.sh
 
 
-for ip in ${IPv4[@]}; do
+for ip in ${IPv4_mgmt[@]}; do
     data_dir="../data/iperf_test_$ip"
     echo -n "gathering data from $ip ..."
     if check_if_up $ip; then
@@ -16,6 +16,3 @@ for ip in ${IPv4[@]}; do
         echo "node is unreachable"
     fi
 done
-
-
-
