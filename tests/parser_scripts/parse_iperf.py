@@ -45,11 +45,13 @@ def compute_percentiles_ping(ff, source_ip=""):
             avg_rtt.append(float(data[4].strip("ms")))
         if not s:
             return
-        print s, ",", d, ",", np.percentile(loss_percentage, 50)
+        print s, ",", d, ",", np.percentile(loss_percentage, 50),\
+              ",", np.percentile(avg_rtt, 50)
 
 
+print_header = True
 def print_percentiles(file_list, source_ip=""):
-    print_header = True
+    global print_header
     for ff in file_list:
         if os.path.basename(ff).find("iperf") is not -1:
             if print_header:
@@ -95,8 +97,6 @@ if args.d:
         data_path = f+"/*csv"
         file_list = glob.glob(data_path)
         print_percentiles(file_list, source_ip=source_ip)
-        print ""
-        print ""
     exit()
 
 if args.f:
