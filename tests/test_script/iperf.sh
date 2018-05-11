@@ -59,6 +59,7 @@ if [ -n "$PING" ]; then
     then 
         rm -f $PINGOUT
     fi 
+    echo -n "$hostname,$DEST," >> $PINGOUT
     ping -c 3 -q $DEST | xargs ./ping_parser.sh >> $PINGOUT
 else 
     IPERFOUT="/tmp/iperftest-iperf-$hostname-$DEST.csv"
