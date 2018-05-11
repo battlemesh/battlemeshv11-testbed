@@ -1,5 +1,6 @@
 set datafile separator ','
-set yrange [-1:100]
 set xlabel "Path"
-set ylabel "bps"
-plot '../parsed_data/iperf.csv' u 0:3  axes x1y1 w l t "bps"
+set ylabel "Mbps"
+set xrange [1:170]
+
+plot '../parsed_data/iperf_bmx.csv' u 0:($3/1000000)  axes x1y1 w l t "Mbps"

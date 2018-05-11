@@ -7,13 +7,14 @@ import tempfile
 import argparse
 import os
 
+
 def compute_percentiles_iperf(ff, source_ip=""):
         f = open(ff)
         bitrate_list = []
         transferred_list = []
         data = defaultdict(dict)
         s = source_ip
-        d  = ""
+        d = ""
         for l in f.readlines():
             data = l.split(",")
             if not s:
@@ -21,7 +22,12 @@ def compute_percentiles_iperf(ff, source_ip=""):
             d = data[3]
             bitrate_list.append(float(data[-1][:-1]))
             transferred_list.append(float(data[7]))
-        if not s or not d or s == d:
+            #TODO IPV4
+            num_s = s[12:]
+            num_d = d[6:-len(d)-3]
+            if(num_s == num_d):
+                print num_s
+        if not s or not d or num_s == num_d:
             return []
         return s, d, np.percentile(bitrate_list, 50),\
               np.percentile(bitrate_list, 10),\
