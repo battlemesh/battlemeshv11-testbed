@@ -14,7 +14,7 @@ with open("config-wdr/network.template", "r") as f_temp:
                 lan_ip = "10.1.%d.1" % (i)
                 radio_ip = "10.0.%d.1" % (i)
                 hna = "10.1.%d.0/24" % (i)
-                ip6 = "fc00:%d::1/64" % (i)
+                ip6 = "fc00:%d::1/128" % (i)
                 ip6_net = "fc00:%d::/64" % (i)
                 print(hna)
                 if not os.path.exists("config-wdr/" + mgmt_ip):

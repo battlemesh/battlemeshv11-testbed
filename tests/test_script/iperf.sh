@@ -41,26 +41,33 @@ while getopts ":c:drp" arg; do
   esac
 done
 
-
 if [ -n "$RND" ]; then
     if [ -n "$IPv6" ];
     then
       DEST_START=$(($RANDOM%${#IPv4[@]}))
       DEST=${IPv4[$DEST_START]}
+      for i in `seq 1 ${#IPv4[@]}`; do
+          echo "pinging $DEST"
+          if check_if_up $DEST; then
+              break;
+          else
+              DEST_ID=$((($i+$DEST_START)%${#IPv4[@]}))
+              DEST=${IPv4[$DEST_ID]}
+          fi;
+      done
     else
       DEST_START=$(($RANDOM%${#IPv6[@]}))
       DEST=${IPv6[$DEST_START]}
+      for i in `seq 1 ${#IPv6[@]}`; do
+          echo "pinging $DEST"
+          if check_if_up $DEST; then
+              break;
+          else
+              DEST_ID=$((($i+$DEST_START)%${#IPv6[@]}))
+              DEST=${IPv6[$DEST_ID]}
+          fi;
+      done
     fi
-
-    for i in `seq 1 ${#IPv4[@]}`; do
-        echo "pinging $DEST"
-        if check_if_up $DEST; then
-            break;
-        else
-            DEST_ID=$((($i+$DEST_START)%${#IPv4[@]}))
-            DEST=${IPv4[$DEST_ID]}
-        fi;
-    done
 fi
 
 if [ -n "$PING" ]; then

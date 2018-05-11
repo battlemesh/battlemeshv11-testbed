@@ -3,6 +3,9 @@ config 'plugin'
 
 config 'plugin'
   option plugin 'bmx7_iwinfo.so'
+
+config 'plugin'
+  option plugin 'bmx7_json.so'
   
 config 'dev'
   option dev 'wlan1'
