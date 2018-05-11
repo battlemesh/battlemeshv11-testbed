@@ -13,14 +13,15 @@ def compute_percentiles_iperf(ff, source_ip=""):
         transferred_list = []
         data = defaultdict(dict)
         s = source_ip
-        for d in f.readlines():
-            data = d.split(",")
+        d  = ""
+        for l in f.readlines():
+            data = l.split(",")
             if not s:
                 s = data[1]
             d = data[3]
             bitrate_list.append(float(data[-1][:-1]))
             transferred_list.append(float(data[7]))
-        if not s:
+        if not s or not d or s == d:
             return []
         return s, d, np.percentile(bitrate_list, 50),\
               np.percentile(bitrate_list, 10),\
@@ -46,7 +47,7 @@ def compute_percentiles_ping(ff, source_ip=""):
                 avg_rtt.append(float(data[4].strip("ms")))
             except Exception:
                 return []
-        if not s:
+        if not s or s == d:
             return []
         return s, d, np.percentile(loss_percentage, 50),\
                np.percentile(avg_rtt, 50)
@@ -59,7 +60,7 @@ def print_percentiles(file_list, source_ip=""):
     global sort_by
     lines = []
     for ff in file_list:
-        if os.path.basename(ff).find("iperf") is not -1:
+        if os.path.basename(ff).find("iperf") is not -1 and args.k == "iperf":
             sort_by = 2
             if print_header:
                 print("source_address, destination_address, transferred_bytes,"
@@ -69,7 +70,7 @@ def print_percentiles(file_list, source_ip=""):
             l = compute_percentiles_iperf(ff, source_ip=source_ip)
             if l:
                 lines.append(l)
-        else:
+        elif os.path.basename(ff).find("ping") is not -1 and args.k == "ping":
             sort_by = 3
             if print_header:
                 print("source_address, destination_address, ping median loss")
@@ -100,6 +101,9 @@ parser.add_argument("-d", help="pass a dir made of dirs in the format:"
 parser.add_argument("-t", help="pass a list of IPs to scp files from",
                     nargs="+")
 parser.add_argument("-p", help="pass a path for the file to scp and parse")
+parser.add_argument("-k", choices=["iperf", "ping"], default="ping",
+                    help="force to some kind of log")
+
 
 args = parser.parse_args()
 
