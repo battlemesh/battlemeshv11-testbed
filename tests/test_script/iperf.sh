@@ -59,7 +59,7 @@ if [ -n "$PING" ]; then
     then 
         rm -f $PINGOUT
     fi 
-    ping -c 3 -q $DEST | tail -n 1 >> $PINGOUT
+    ping -c 3 -q $DEST | xargs ./ping_parser.sh >> $PINGOUT
 else 
     IPERFOUT="/tmp/iperftest-iperf-$hostname-$DEST.csv"
     if [ -n "$DELETE" ];
