@@ -77,13 +77,13 @@ position_map["10.0.3.1"] = {'x': 119, 'y': 48}
 position_map["10.0.13.1"] = {'x': 325, 'y': 84}
 position_map["10.0.14.1"] = {'x': 59, 'y': 228}
 position_map["10.0.15.1"] = {'x': 231, 'y': 38}
-position_map["10.0.16.1"] = {'x': 400, 'y': 270}
-position_map["10.0.17.1"] = {'x': 400, 'y': 300}
+#position_map["10.0.16.1"] = {'x': 400, 'y': 270}
+#position_map["10.0.17.1"] = {'x': 400, 'y': 300}
 position_map["10.0.18.1"] = {'x': 50, 'y': 60}
 position_map["10.0.19.1"] = {'x': 350, 'y': 300}
 position_map["10.0.20.1"] = {'x': 290, 'y': 260}
-position_map["10.0.21.1"] = {'x': 400, 'y': 250}
-position_map["10.0.22.1"] = {'x': 350, 'y': 250}
+#position_map["10.0.21.1"] = {'x': 400, 'y': 250}
+#position_map["10.0.22.1"] = {'x': 350, 'y': 250}
 position_map["10.0.23.1"] = {'x': 300, 'y': 210}
 
 peerstreamer_map = [position_map["10.0."+str(x)+".1"] for x in [7, 1, 5, 13, 6,
@@ -133,6 +133,6 @@ for ps in peerstreamer_map:
     plot_node(ps, color='b')
 
 ax.imshow(img)
-plt.savefig("/tmp/map.png")
+plt.savefig("../tests/graphs/map.png", dpi=300)
 plt.show()
 nx.write_graphml(new_g, "/tmp/graph.graphml")

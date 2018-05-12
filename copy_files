@@ -7,6 +7,6 @@ cat $1 | while read -r line
 do
     ip="$line"
     echo $ip
-    echo|ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip "mkdir -p $3"
-    echo|scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $2 root@[$ip]:$3
+    echo|ssh -o ConnectTimeout=20 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null root@$ip "mkdir -p $3"
+    echo|scp -o ConnectTimeout=20 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $2 root@[$ip]:$3
 done
