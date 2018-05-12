@@ -6,6 +6,7 @@ import numpy as np
 import tempfile
 import argparse
 import os
+import ipaddress
 
 
 def compute_percentiles_iperf(ff, source_ip=""):
@@ -22,17 +23,19 @@ def compute_percentiles_iperf(ff, source_ip=""):
             d = data[3]
             bitrate_list.append(float(data[-1][:-1]))
             transferred_list.append(float(data[7]))
-            #TODO IPV4
-            num_s = s[12:]
-            num_d = d[6:-len(d)-3]
-            if(num_s == num_d):
-                print num_s
-        if not s or not d or num_s == num_d:
+            destination = ipaddress.ip_address(unicode(d))
+            if(isinstance(destination, ipaddress.IPv6Address)):
+                src_id = s[12:]
+                dst_id = d[5:len(d) - 3]
+            else:
+                src_id = s[12:]
+                dst_id = d[5:len(d)-2]
+        if not s or not d or src_id == dst_id:
             return []
         return s, d, np.percentile(bitrate_list, 50),\
-              np.percentile(bitrate_list, 10),\
-              np.percentile(bitrate_list, 90),\
-              np.percentile(transferred_list, 50)
+            np.percentile(bitrate_list, 10),\
+            np.percentile(bitrate_list, 90),\
+            np.percentile(transferred_list, 50)
 
 
 def compute_percentiles_ping(ff, source_ip=""):
@@ -69,9 +72,9 @@ def print_percentiles(file_list, source_ip=""):
         if os.path.basename(ff).find("iperf") is not -1 and args.k == "iperf":
             sort_by = 2
             if print_header:
-                print("source_address, destination_address, transferred_bytes,"
+                print("source_address, destination_address,"
                       "bits_per_second (median), bits_per_second (10perc),"
-                      "bits_per_second (90perc)")
+                      "bits_per_second (90perc), transferred bits (median)")
                 print_header = False
             l = compute_percentiles_iperf(ff, source_ip=source_ip)
             if l:

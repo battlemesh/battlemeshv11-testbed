@@ -12,12 +12,12 @@ source functions.sh
 # 
 #   
 # done
-for i in `seq 1 ${#IPv6[@]}`; do
+for i in `seq 1 ${#IPv4[@]}`; do
   DEST_START=0
-  DEST=${IPv6[$DEST_ID]}
+  DEST=${IPv4[$DEST_ID]}
   if check_if_up $DEST; then
-    ./iperf.sh -6 -c $DEST
+    ./iperf.shp -c $DEST
   fi;
-  DEST_ID=$((($i+$DEST_START)%${#IPv6[@]}))
+  DEST_ID=$((($i+$DEST_START)%${#IPv4[@]}))
   DEST=${IPv6[$DEST_ID]}
 done
