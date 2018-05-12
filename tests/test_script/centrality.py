@@ -24,9 +24,10 @@ for x in list(cp):
     del(cent[x])
 sorted(cent, key=cent.__getitem__)
 
+print(cent)
 
 node = list(cent.keys())[0]
 node_ip = node[3:]
 print("%s: killing node: %s with centrality %f" % (time.time(), node_ip, cent[node]))
 
-os.system('ssh root@%s "/etc/init.d/olsrd2 stop"' % (node_ip))
+os.system('ssh root@%s "killall olsrd2 && killall exe"' % (node_ip))

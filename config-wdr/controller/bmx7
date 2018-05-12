@@ -14,7 +14,7 @@ config 'dev'
   option dev 'eth0.4'
     
 config 'unicastHna'
-  option unicastHna 'fc00:1::/64'
+  option unicastHna 'fc00:2::/64'
 
 config 'tunDev'
   option tunDev 'main'

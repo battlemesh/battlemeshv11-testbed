@@ -1,12 +1,9 @@
 set terminal png
 set output "../graphs/iperf_results_olsr.png"
 set key autotitle columnhead
-load "plot_iperf.gnuplot"
+set datafile separator ','
+set xlabel "Path"
+set ylabel "Mbps"
+set xrange [0:180]
 
-reset
-set terminal png
-set output "../graphs/iperf_results_alltogether_olsr.png"
-set key autotitle columnhead
-load "plot_iperf_alltogether.gnuplot"
-
-
+plot '../parsed_data/iperf_olsr.csv' u 0:($3/1000000)  axes x1y1 w l t "OLSRv2"

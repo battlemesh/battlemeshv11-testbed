@@ -6,11 +6,7 @@ source functions.sh
 usage() { echo "$0 usage:" && grep " .)\ #" $0; exit 0; }
 [ $# -eq 0 ] && usage
 
-hostname=`ip -o addr show dev wlan1|grep inet\ | awk '{print $4}' | sed -e s@/[0-9]*@/32@ | awk -F '/' '{print $1}'`
-
-if [ -z $hostname ]; then 
-    hostaname=`hostname`
-fi
+hostname=`ip -o addr show dev lo|grep inet\ | awk '{print $4}' | sed -e s@/[0-9]*@/32@ | awk -F '/' '{print $1}' | grep -v 127`
 
 
 PING=''
@@ -18,7 +14,7 @@ DELETE=''
 RND=''
 IPv6=''
 
-while getopts ":c:drp" arg; do
+while getopts ":c:drp6" arg; do
   case $arg in
     c) # Specify destination.
       DEST=${OPTARG}
@@ -28,6 +24,7 @@ while getopts ":c:drp" arg; do
       ;;
     6) # use ipv6
     IPv6=1
+      ;;
     r) # pick a random destination
 	  RND=1
       ;;
@@ -86,9 +83,9 @@ else
     fi
     if [ -n "$IPv6" ];
     then
-      iperf -f M -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
-    else
       iperf -f M -V -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
+    else
+      iperf -f M -y C -t 10 -e -c $DEST | tail -n 2 >> $IPERFOUT
     fi
 fi 
 
